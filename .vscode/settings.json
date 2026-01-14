@@ -1,0 +1,6 @@
+{
+    "prettier.requireConfig": true,
+    "prettier.bracketSameLine": false,
+    "prettier.insertPragma": true,
+    "vs-code-prettier-eslint.prettierLast": true
+}

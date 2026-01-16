@@ -2,5 +2,7 @@
     "prettier.requireConfig": true,
     "prettier.bracketSameLine": false,
     "prettier.insertPragma": true,
-    "vs-code-prettier-eslint.prettierLast": true
+    "vs-code-prettier-eslint.prettierLast": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
 }

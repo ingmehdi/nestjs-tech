@@ -1,18 +1,38 @@
-import { Controller, Get, HttpStatus, Post, Res } from "@nestjs/common";
-import express from "express";
+import {
+  Body,
+  Controller,
+  ForbiddenException,
+  Get,
+  HttpException,
+  HttpStatus,
+  Post,
+  UseFilters,
+} from "@nestjs/common";
 import { AppService } from "./app.service";
+import { HttpExceptionFilter } from "./http-exception.filter";
+import { CreateCatDto } from "./cat.dto";
 
-@Controller("cats/*")
+@Controller("cats")
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Post()
-  create(@Res() res: express.Response) {
-    res.status(HttpStatus.CREATED).send();
+  @UseFilters(HttpExceptionFilter)
+  create(@Body() createDto: CreateCatDto) {
+    throw new ForbiddenException();
   }
 
   @Get()
-  findAll(@Res() res: express.Response) {
-    res.status(HttpStatus.OK).json([]);
+  async findAll() {
+    throw new HttpException(
+      {
+        status: HttpStatus.FORBIDDEN,
+        error: "This is a custom message",
+      },
+      HttpStatus.FORBIDDEN,
+      {
+        cause: "error",
+      },
+    );
   }
 }

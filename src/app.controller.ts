@@ -1,29 +1,23 @@
 import {
   Body,
   Controller,
-  ForbiddenException,
   Get,
   HttpException,
   HttpStatus,
   Post,
-  UseFilters,
+  UsePipes,
 } from "@nestjs/common";
 import { AppService } from "./app.service";
-import { HttpExceptionFilter } from "./http-exception.filter";
-import { CreateCatDto } from "./cat.dto";
+import { ZodValidationPipe } from "./zod.pipe";
+import { createCatSchema, type CreateCatDto } from "./cat.schema";
+import { ValidationPipe } from "./validation.pipe";
 
 @Controller("cats")
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Post()
-  @UseFilters(HttpExceptionFilter)
-  create(@Body() createDto: CreateCatDto) {
-    throw new ForbiddenException();
-  }
-
   @Get()
-  async findAll() {
+  findAll() {
     throw new HttpException(
       {
         status: HttpStatus.FORBIDDEN,
@@ -34,5 +28,18 @@ export class AppController {
         cause: "error",
       },
     );
+  }
+
+  @Post()
+  @UsePipes(new ZodValidationPipe(createCatSchema))
+  async create(@Body() createCatDto: CreateCatDto) {
+    this.appService.create(createCatDto);
+  }
+
+  @Post()
+  async createWithValidation(
+    @Body(new ValidationPipe()) createCatDto: CreateCatDto,
+  ) {
+    this.appService.create(createCatDto);
   }
 }

@@ -4,6 +4,8 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Param,
+  ParseIntPipe,
   Post,
   UsePipes,
 } from "@nestjs/common";
@@ -41,5 +43,10 @@ export class AppController {
     @Body(new ValidationPipe()) createCatDto: CreateCatDto,
   ) {
     this.appService.create(createCatDto);
+  }
+
+  @Get(":id")
+  async findOne(@Param("id", new ParseIntPipe()) id) {
+    return this.appService.findOne(id);
   }
 }

@@ -17,13 +17,9 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prepare": "husky",
-    "lint": "biome check --apply ./src",
-    "lint:ci": "biome ci ./src",
-    "format": "biome format --write ./src",
-    "type-check": "tsc --noEmit --skipLibCheck",
-    "security": "npm audit --audit-level=high && npx commit-sec scan",
-    "test:staged": "vitest related --run",
-    "validate": "concurrently -n lint,type,test \"npm run lint:ci\" \"npm run type-check\" \"npm run test:staged\""
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -31,10 +27,13 @@
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.2.5",
+    "@nestjs/typeorm": "^11.0.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.3",
+    "mysql2": "^3.16.1",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",
+    "typeorm": "^0.3.28",
     "zod": "^4.3.5"
   },
   "devDependencies": {
@@ -42,7 +41,7 @@
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
     "@eslint/eslintrc": "^3.2.0",
-    "@eslint/js": "^9.18.0",
+    "@eslint/js": "^9.39.2",
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
@@ -53,7 +52,7 @@
     "depcheck": "^1.4.7",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
-    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-prettier": "^5.5.5",
     "globals": "^16.0.0",
     "husky": "^9.1.7",
     "jest": "^30.2.0",
@@ -65,10 +64,10 @@
     "supertest": "^7.0.0",
     "ts-jest": "^29.4.6",
     "ts-loader": "^9.5.2",
-    "ts-node": "^1.7.1",
+    "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
-    "typescript-eslint": "^8.20.0"
+    "typescript-eslint": "^8.53.1"
   },
   "jest": {
     "moduleFileExtensions": [

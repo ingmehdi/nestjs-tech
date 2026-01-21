@@ -1,5 +1,5 @@
-import { Injectable } from "@nestjs/common";
-import { Cat } from "./cat.dto";
+import { Injectable } from '@nestjs/common';
+import { Cat } from './cat.dto';
 
 @Injectable()
 export class AppService {

@@ -8,13 +8,13 @@ import {
   ParseIntPipe,
   Post,
   UsePipes,
-} from "@nestjs/common";
-import { AppService } from "./app.service";
-import { ZodValidationPipe } from "./zod.pipe";
-import { createCatSchema, type CreateCatDto } from "./cat.schema";
-import { ValidationPipe } from "./validation.pipe";
+} from '@nestjs/common';
+import { AppService } from './app.service';
+import { ZodValidationPipe } from './zod.pipe';
+import { createCatSchema, type CreateCatDto } from './cat.schema';
+import { ValidationPipe } from './validation.pipe';
 
-@Controller("cats")
+@Controller('cats')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
@@ -23,11 +23,11 @@ export class AppController {
     throw new HttpException(
       {
         status: HttpStatus.FORBIDDEN,
-        error: "This is a custom message",
+        error: 'This is a custom message',
       },
       HttpStatus.FORBIDDEN,
       {
-        cause: "error",
+        cause: 'error',
       },
     );
   }
@@ -39,14 +39,12 @@ export class AppController {
   }
 
   @Post()
-  async createWithValidation(
-    @Body(new ValidationPipe()) createCatDto: CreateCatDto,
-  ) {
+  async createWithValidation(@Body(new ValidationPipe()) createCatDto: CreateCatDto) {
     this.appService.create(createCatDto);
   }
 
-  @Get(":id")
-  async findOne(@Param("id", new ParseIntPipe()) id) {
+  @Get(':id')
+  async findOne(@Param('id', new ParseIntPipe()) id) {
     return this.appService.findOne(id);
   }
 }
